@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.28
-Release  : 9
+Release  : 10
 URL      : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Source0  : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Summary  : GNOME Accessibility Implementation Library
