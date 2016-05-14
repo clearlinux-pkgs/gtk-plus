@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.28
-Release  : 10
+Release  : 11
 URL      : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Source0  : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -21,6 +21,8 @@ BuildRequires : docbook-xml
 BuildRequires : gdk-pixbuf
 BuildRequires : gettext
 BuildRequires : gettext-bin
+BuildRequires : gobject-introspection
+BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
 BuildRequires : libXinerama-dev
@@ -69,6 +71,7 @@ Group: Development
 Requires: gtk+-lib
 Requires: gtk+-bin
 Requires: gtk+-data
+Provides: gtk+-devel
 
 %description dev
 dev components for the gtk+ package.
@@ -132,6 +135,9 @@ rm -rf %{buildroot}
 %files data
 %defattr(-,root,root,-)
 /usr/share/defaults/gtk-2.0/im-multipress.conf
+/usr/share/gir-1.0/Gdk-2.0.gir
+/usr/share/gir-1.0/GdkX11-2.0.gir
+/usr/share/gir-1.0/Gtk-2.0.gir
 /usr/share/gtk-2.0/demo/alphatest.png
 /usr/share/gtk-2.0/demo/apple-red.png
 /usr/share/gtk-2.0/demo/appwindow.c
@@ -450,6 +456,9 @@ rm -rf %{buildroot}
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintunixdialog.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkunixprint.h
 /usr/lib64/*.so
+/usr/lib64/girepository-1.0/Gdk-2.0.typelib
+/usr/lib64/girepository-1.0/GdkX11-2.0.typelib
+/usr/lib64/girepository-1.0/Gtk-2.0.typelib
 /usr/lib64/gtk-2.0/include/gdkconfig.h
 /usr/lib64/pkgconfig/*.pc
 /usr/share/aclocal/*.m4

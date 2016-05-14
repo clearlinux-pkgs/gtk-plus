@@ -3,3 +3,5 @@
 # desirable. One name per line, no whitespace.
 #
 gdk-pixbuf
+gobject-introspection-dev
+gobject-introspection
