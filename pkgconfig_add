@@ -3,4 +3,6 @@
 # desirable. One name per line, no whitespace.
 #
 gdk-pixbuf-2.0
-
+pango
+atk
+cairo

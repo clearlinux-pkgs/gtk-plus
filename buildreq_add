@@ -5,3 +5,4 @@
 gdk-pixbuf
 gobject-introspection-dev
 gobject-introspection
+libXinerama-dev
