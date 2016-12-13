@@ -6,3 +6,14 @@ gdk-pixbuf-2.0
 pango
 atk
 cairo
+x11
+xext
+32gdk-pixbuf-2.0
+32pango
+32atk
+32cairo
+32x11
+32xext
+32x11
+32xext 
+32xrender

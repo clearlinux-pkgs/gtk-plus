@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.28
-Release  : 14
+Release  : 15
 URL      : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Source0  : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -18,26 +18,46 @@ Requires: gtk+-locales
 BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : docbook-xml
+BuildRequires : fontconfig-dev32
+BuildRequires : freetype-dev32
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
 BuildRequires : gdk-pixbuf
+BuildRequires : gdk-pixbuf-dev32
 BuildRequires : gettext
 BuildRequires : gettext-bin
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
 BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
 BuildRequires : libXinerama-dev
+BuildRequires : libXinerama-dev32
 BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : libxslt-bin
 BuildRequires : m4
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkg-config-dev
+BuildRequires : pkgconfig(32atk)
+BuildRequires : pkgconfig(32cairo)
+BuildRequires : pkgconfig(32gdk-pixbuf-2.0)
+BuildRequires : pkgconfig(32glib-2.0)
+BuildRequires : pkgconfig(32gmodule-2.0)
+BuildRequires : pkgconfig(32pango)
+BuildRequires : pkgconfig(32x11)
+BuildRequires : pkgconfig(32xext)
+BuildRequires : pkgconfig(32xrender)
 BuildRequires : pkgconfig(atk)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(gdk-pixbuf-2.0)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(gmodule-2.0)
 BuildRequires : pkgconfig(pango)
+BuildRequires : pkgconfig(x11)
+BuildRequires : pkgconfig(xext)
 Patch1: 0001-Convert-im-multipress-to-stateless-configuration.patch
 
 %description
@@ -77,6 +97,18 @@ Provides: gtk+-devel
 dev components for the gtk+ package.
 
 
+%package dev32
+Summary: dev32 components for the gtk+ package.
+Group: Default
+Requires: gtk+-lib32
+Requires: gtk+-bin
+Requires: gtk+-data
+Requires: gtk+-dev
+
+%description dev32
+dev32 components for the gtk+ package.
+
+
 %package doc
 Summary: doc components for the gtk+ package.
 Group: Documentation
@@ -94,6 +126,15 @@ Requires: gtk+-data
 lib components for the gtk+ package.
 
 
+%package lib32
+Summary: lib32 components for the gtk+ package.
+Group: Default
+Requires: gtk+-data
+
+%description lib32
+lib32 components for the gtk+ package.
+
+
 %package locales
 Summary: locales components for the gtk+ package.
 Group: Default
@@ -105,11 +146,22 @@ locales components for the gtk+ package.
 %prep
 %setup -q -n gtk+-2.24.28
 %patch1 -p1
+pushd ..
+cp -a gtk+-2.24.28 build32
+popd
 
 %build
 export LANG=C
 %reconfigure --disable-static
 make V=1  %{?_smp_mflags}
+pushd ../build32/
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+%reconfigure --disable-static   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make V=1  %{?_smp_mflags}
+popd
 
 %check
 export LANG=C
@@ -120,12 +172,40 @@ make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
 rm -rf %{buildroot}
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
+popd
 %make_install
 %find_lang gtk20-properties
 %find_lang gtk20
 
 %files
 %defattr(-,root,root,-)
+/usr/lib32/girepository-1.0/Gdk-2.0.typelib
+/usr/lib32/girepository-1.0/GdkX11-2.0.typelib
+/usr/lib32/girepository-1.0/Gtk-2.0.typelib
+/usr/lib32/gtk-2.0/2.10.0/engines/libpixmap.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-am-et.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-cedilla.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-cyrillic-translit.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-inuktitut.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-ipa.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-multipress.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-thai.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-er.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-et.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-viqr.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-xim.so
+/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-file.so
+/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so
+/usr/lib32/gtk-2.0/modules/libferret.so
+/usr/lib32/gtk-2.0/modules/libgail.so
 
 %files bin
 %defattr(-,root,root,-)
@@ -454,6 +534,7 @@ rm -rf %{buildroot}
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintjob.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintunixdialog.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkunixprint.h
+/usr/lib32/gtk-2.0/include/gdkconfig.h
 /usr/lib64/girepository-1.0/Gdk-2.0.typelib
 /usr/lib64/girepository-1.0/GdkX11-2.0.typelib
 /usr/lib64/girepository-1.0/Gtk-2.0.typelib
@@ -469,6 +550,24 @@ rm -rf %{buildroot}
 /usr/lib64/pkgconfig/gtk+-x11-2.0.pc
 /usr/share/aclocal/*.m4
 /usr/share/gir-1.0/*.gir
+
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libgailutil.so
+/usr/lib32/libgdk-x11-2.0.so
+/usr/lib32/libgtk-x11-2.0.so
+/usr/lib32/pkgconfig/32gail.pc
+/usr/lib32/pkgconfig/32gdk-2.0.pc
+/usr/lib32/pkgconfig/32gdk-x11-2.0.pc
+/usr/lib32/pkgconfig/32gtk+-2.0.pc
+/usr/lib32/pkgconfig/32gtk+-unix-print-2.0.pc
+/usr/lib32/pkgconfig/32gtk+-x11-2.0.pc
+/usr/lib32/pkgconfig/gail.pc
+/usr/lib32/pkgconfig/gdk-2.0.pc
+/usr/lib32/pkgconfig/gdk-x11-2.0.pc
+/usr/lib32/pkgconfig/gtk+-2.0.pc
+/usr/lib32/pkgconfig/gtk+-unix-print-2.0.pc
+/usr/lib32/pkgconfig/gtk+-x11-2.0.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -1126,6 +1225,15 @@ rm -rf %{buildroot}
 /usr/lib64/libgdk-x11-2.0.so.0.2400.28
 /usr/lib64/libgtk-x11-2.0.so.0
 /usr/lib64/libgtk-x11-2.0.so.0.2400.28
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libgailutil.so.18
+/usr/lib32/libgailutil.so.18.0.1
+/usr/lib32/libgdk-x11-2.0.so.0
+/usr/lib32/libgdk-x11-2.0.so.0.2400.28
+/usr/lib32/libgtk-x11-2.0.so.0
+/usr/lib32/libgtk-x11-2.0.so.0.2400.28
 
 %files locales -f gtk20-properties.lang -f gtk20.lang 
 %defattr(-,root,root,-)

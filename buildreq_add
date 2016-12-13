@@ -6,3 +6,7 @@ gdk-pixbuf
 gobject-introspection-dev
 gobject-introspection
 libXinerama-dev
+libXinerama-dev32
+gdk-pixbuf-dev32
+freetype-dev32
+fontconfig-dev32
