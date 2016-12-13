@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.28
-Release  : 13
+Release  : 14
 URL      : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Source0  : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -107,10 +107,12 @@ locales components for the gtk+ package.
 %patch1 -p1
 
 %build
+export LANG=C
 %reconfigure --disable-static
 make V=1  %{?_smp_mflags}
 
 %check
+export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
@@ -135,9 +137,6 @@ rm -rf %{buildroot}
 %files data
 %defattr(-,root,root,-)
 /usr/share/defaults/gtk-2.0/im-multipress.conf
-/usr/share/gir-1.0/Gdk-2.0.gir
-/usr/share/gir-1.0/GdkX11-2.0.gir
-/usr/share/gir-1.0/Gtk-2.0.gir
 /usr/share/gtk-2.0/demo/alphatest.png
 /usr/share/gtk-2.0/demo/apple-red.png
 /usr/share/gtk-2.0/demo/appwindow.c
@@ -455,13 +454,21 @@ rm -rf %{buildroot}
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintjob.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintunixdialog.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkunixprint.h
-/usr/lib64/*.so
 /usr/lib64/girepository-1.0/Gdk-2.0.typelib
 /usr/lib64/girepository-1.0/GdkX11-2.0.typelib
 /usr/lib64/girepository-1.0/Gtk-2.0.typelib
 /usr/lib64/gtk-2.0/include/gdkconfig.h
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libgailutil.so
+/usr/lib64/libgdk-x11-2.0.so
+/usr/lib64/libgtk-x11-2.0.so
+/usr/lib64/pkgconfig/gail.pc
+/usr/lib64/pkgconfig/gdk-2.0.pc
+/usr/lib64/pkgconfig/gdk-x11-2.0.pc
+/usr/lib64/pkgconfig/gtk+-2.0.pc
+/usr/lib64/pkgconfig/gtk+-unix-print-2.0.pc
+/usr/lib64/pkgconfig/gtk+-x11-2.0.pc
 /usr/share/aclocal/*.m4
+/usr/share/gir-1.0/*.gir
 
 %files doc
 %defattr(-,root,root,-)
@@ -1097,7 +1104,6 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
 /usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-am-et.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-cedilla.so
@@ -1114,6 +1120,12 @@ rm -rf %{buildroot}
 /usr/lib64/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so
 /usr/lib64/gtk-2.0/modules/libferret.so
 /usr/lib64/gtk-2.0/modules/libgail.so
+/usr/lib64/libgailutil.so.18
+/usr/lib64/libgailutil.so.18.0.1
+/usr/lib64/libgdk-x11-2.0.so.0
+/usr/lib64/libgdk-x11-2.0.so.0.2400.28
+/usr/lib64/libgtk-x11-2.0.so.0
+/usr/lib64/libgtk-x11-2.0.so.0.2400.28
 
 %files locales -f gtk20-properties.lang -f gtk20.lang 
 %defattr(-,root,root,-)
