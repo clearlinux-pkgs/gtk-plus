@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.28
-Release  : 15
+Release  : 16
 URL      : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Source0  : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -152,6 +152,13 @@ popd
 
 %build
 export LANG=C
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
 %reconfigure --disable-static
 make V=1  %{?_smp_mflags}
 pushd ../build32/
@@ -1235,6 +1242,6 @@ popd
 /usr/lib32/libgtk-x11-2.0.so.0
 /usr/lib32/libgtk-x11-2.0.so.0.2400.28
 
-%files locales -f gtk20-properties.lang -f gtk20.lang 
+%files locales -f gtk20-properties.lang -f gtk20.lang
 %defattr(-,root,root,-)
 
