@@ -4,15 +4,15 @@
 #
 Name     : gtk+
 Version  : 2.24.28
-Release  : 16
+Release  : 17
 URL      : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Source0  : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Summary  : GNOME Accessibility Implementation Library
 Group    : Development/Tools
-License  : GPL-2.0 LGPL-2.0 LGPL-2.1
+License  : LGPL-2.0 LGPL-2.1
 Requires: gtk+-bin
-Requires: gtk+-lib
 Requires: gtk+-data
+Requires: gtk+-lib
 Requires: gtk+-doc
 Requires: gtk+-locales
 BuildRequires : automake
@@ -152,6 +152,7 @@ popd
 
 %build
 export LANG=C
+export SOURCE_DATE_EPOCH=1491322328
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -178,6 +179,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
+export SOURCE_DATE_EPOCH=1491322328
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -197,22 +199,6 @@ popd
 /usr/lib32/girepository-1.0/Gdk-2.0.typelib
 /usr/lib32/girepository-1.0/GdkX11-2.0.typelib
 /usr/lib32/girepository-1.0/Gtk-2.0.typelib
-/usr/lib32/gtk-2.0/2.10.0/engines/libpixmap.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-am-et.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-cedilla.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-cyrillic-translit.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-inuktitut.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-ipa.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-multipress.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-thai.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-er.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-et.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-viqr.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-xim.so
-/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-file.so
-/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so
-/usr/lib32/gtk-2.0/modules/libferret.so
-/usr/lib32/gtk-2.0/modules/libgail.so
 
 %files bin
 %defattr(-,root,root,-)
@@ -223,7 +209,11 @@ popd
 
 %files data
 %defattr(-,root,root,-)
+/usr/lib64/girepository-1.0/Gdk-2.0.typelib
+/usr/lib64/girepository-1.0/GdkX11-2.0.typelib
+/usr/lib64/girepository-1.0/Gtk-2.0.typelib
 /usr/share/defaults/gtk-2.0/im-multipress.conf
+/usr/share/gir-1.0/*.gir
 /usr/share/gtk-2.0/demo/alphatest.png
 /usr/share/gtk-2.0/demo/apple-red.png
 /usr/share/gtk-2.0/demo/appwindow.c
@@ -542,9 +532,6 @@ popd
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintunixdialog.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkunixprint.h
 /usr/lib32/gtk-2.0/include/gdkconfig.h
-/usr/lib64/girepository-1.0/Gdk-2.0.typelib
-/usr/lib64/girepository-1.0/GdkX11-2.0.typelib
-/usr/lib64/girepository-1.0/Gtk-2.0.typelib
 /usr/lib64/gtk-2.0/include/gdkconfig.h
 /usr/lib64/libgailutil.so
 /usr/lib64/libgdk-x11-2.0.so
@@ -556,7 +543,6 @@ popd
 /usr/lib64/pkgconfig/gtk+-unix-print-2.0.pc
 /usr/lib64/pkgconfig/gtk+-x11-2.0.pc
 /usr/share/aclocal/*.m4
-/usr/share/gir-1.0/*.gir
 
 %files dev32
 %defattr(-,root,root,-)
@@ -1235,6 +1221,22 @@ popd
 
 %files lib32
 %defattr(-,root,root,-)
+/usr/lib32/gtk-2.0/2.10.0/engines/libpixmap.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-am-et.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-cedilla.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-cyrillic-translit.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-inuktitut.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-ipa.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-multipress.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-thai.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-er.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-et.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-viqr.so
+/usr/lib32/gtk-2.0/2.10.0/immodules/im-xim.so
+/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-file.so
+/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so
+/usr/lib32/gtk-2.0/modules/libferret.so
+/usr/lib32/gtk-2.0/modules/libgail.so
 /usr/lib32/libgailutil.so.18
 /usr/lib32/libgailutil.so.18.0.1
 /usr/lib32/libgdk-x11-2.0.so.0
