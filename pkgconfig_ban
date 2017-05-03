@@ -6,3 +6,4 @@ cairo-$cairo_backend
 directfb
 32cairo-$cairo_backend
 32directfb
+32atk_required_version

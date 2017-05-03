@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.28
-Release  : 18
+Release  : 19
 URL      : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Source0  : http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/gtk+-2.24.28.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -33,6 +33,10 @@ BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
+BuildRequires : libXdamage-dev
+BuildRequires : libXdamage-dev32
+BuildRequires : libXfixes-dev
+BuildRequires : libXfixes-dev32
 BuildRequires : libXinerama-dev
 BuildRequires : libXinerama-dev32
 BuildRequires : libtool
@@ -151,8 +155,11 @@ cp -a gtk+-2.24.28 build32
 popd
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1491322328
+export SOURCE_DATE_EPOCH=1493781411
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -175,11 +182,11 @@ popd
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1491322328
+export SOURCE_DATE_EPOCH=1493781411
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
