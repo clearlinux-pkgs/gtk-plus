@@ -14,4 +14,7 @@ libXdamage-dev32
 libXdamage-dev
 libXfixes-dev32
 libXfixes-dev
-
+# required because of cups
+cups-dev
+krb5-dev
+e2fsprogs-dev
