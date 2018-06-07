@@ -18,3 +18,5 @@ libXfixes-dev
 cups-dev
 krb5-dev
 e2fsprogs-dev
+fribidi-dev
+fribidi-dev32

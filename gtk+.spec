@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 26
+Release  : 27
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -13,7 +13,6 @@ License  : LGPL-2.0 LGPL-2.1
 Requires: gtk+-bin
 Requires: gtk+-data
 Requires: gtk+-lib
-Requires: gtk+-doc
 Requires: gtk+-locales
 BuildRequires : automake
 BuildRequires : automake-dev
@@ -22,6 +21,8 @@ BuildRequires : docbook-xml
 BuildRequires : e2fsprogs-dev
 BuildRequires : fontconfig-dev32
 BuildRequires : freetype-dev32
+BuildRequires : fribidi-dev
+BuildRequires : fribidi-dev32
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
@@ -162,7 +163,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1521044771
+export SOURCE_DATE_EPOCH=1528388648
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -189,7 +190,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1521044771
+export SOURCE_DATE_EPOCH=1528388648
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
