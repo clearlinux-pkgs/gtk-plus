@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 27
+Release  : 28
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -13,6 +13,7 @@ License  : LGPL-2.0 LGPL-2.1
 Requires: gtk+-bin
 Requires: gtk+-data
 Requires: gtk+-lib
+Requires: gtk+-license
 Requires: gtk+-locales
 BuildRequires : automake
 BuildRequires : automake-dev
@@ -32,6 +33,7 @@ BuildRequires : gettext
 BuildRequires : gettext-bin
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
+BuildRequires : gnutls-dev
 BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
@@ -47,7 +49,9 @@ BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : libxslt-bin
 BuildRequires : m4
+BuildRequires : perl
 BuildRequires : perl(XML::Parser)
+BuildRequires : pkg-config
 BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(32atk)
 BuildRequires : pkgconfig(32cairo)
@@ -80,6 +84,7 @@ complete application suites.
 Summary: bin components for the gtk+ package.
 Group: Binaries
 Requires: gtk+-data
+Requires: gtk+-license
 
 %description bin
 bin components for the gtk+ package.
@@ -129,6 +134,7 @@ doc components for the gtk+ package.
 Summary: lib components for the gtk+ package.
 Group: Libraries
 Requires: gtk+-data
+Requires: gtk+-license
 
 %description lib
 lib components for the gtk+ package.
@@ -138,9 +144,18 @@ lib components for the gtk+ package.
 Summary: lib32 components for the gtk+ package.
 Group: Default
 Requires: gtk+-data
+Requires: gtk+-license
 
 %description lib32
 lib32 components for the gtk+ package.
+
+
+%package license
+Summary: license components for the gtk+ package.
+Group: Default
+
+%description license
+license components for the gtk+ package.
 
 
 %package locales
@@ -163,7 +178,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1528388648
+export SOURCE_DATE_EPOCH=1535065127
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -190,8 +205,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1528388648
+export SOURCE_DATE_EPOCH=1535065127
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/gtk+
+cp COPYING %{buildroot}/usr/share/doc/gtk+/COPYING
+cp gdk/COPYING %{buildroot}/usr/share/doc/gtk+/gdk_COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -574,7 +592,7 @@ popd
 /usr/lib32/pkgconfig/gtk+-x11-2.0.pc
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/gtk-doc/html/gail-libgail-util/gail-libgail-util-GailMisc.html
 /usr/share/gtk-doc/html/gail-libgail-util/gail-libgail-util-GailTextUtil.html
 /usr/share/gtk-doc/html/gail-libgail-util/gail-libgail-util.devhelp2
@@ -1227,6 +1245,11 @@ popd
 /usr/lib32/libgdk-x11-2.0.so.0.2400.32
 /usr/lib32/libgtk-x11-2.0.so.0
 /usr/lib32/libgtk-x11-2.0.so.0.2400.32
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/gtk+/COPYING
+/usr/share/doc/gtk+/gdk_COPYING
 
 %files locales -f gtk20-properties.lang -f gtk20.lang
 %defattr(-,root,root,-)

@@ -14,7 +14,6 @@ libgailutil.so.18:gail_text_util_new
 libgailutil.so.18:gail_text_util_text_setup
 libgdk-x11-2.0.so.0:_gdk_bitmap_create_from_data
 libgdk-x11-2.0.so.0:_gdk_cursor_destroy
-libgdk-x11-2.0.so.0:_gdk_debug_flags
 libgdk-x11-2.0.so.0:_gdk_device_get_history
 libgdk-x11-2.0.so.0:_gdk_display_arg_name
 libgdk-x11-2.0.so.0:_gdk_display_enable_motion_hints
@@ -49,6 +48,7 @@ libgdk-x11-2.0.so.0:_gdk_gc_set_clip_region_internal
 libgdk-x11-2.0.so.0:_gdk_get_sm_client_id
 libgdk-x11-2.0.so.0:_gdk_init_input_core
 libgdk-x11-2.0.so.0:_gdk_input_configure_event
+libgdk-x11-2.0.so.0:_gdk_input_crossing_event
 libgdk-x11-2.0.so.0:_gdk_input_grab_pointer
 libgdk-x11-2.0.so.0:_gdk_input_init
 libgdk-x11-2.0.so.0:_gdk_input_other_event
@@ -78,6 +78,7 @@ libgdk-x11-2.0.so.0:_gdk_window_event_parent_of
 libgdk-x11-2.0.so.0:_gdk_window_get_impl_window
 libgdk-x11-2.0.so.0:_gdk_window_has_impl
 libgdk-x11-2.0.so.0:_gdk_window_invalidate_for_expose
+libgdk-x11-2.0.so.0:_gdk_window_process_expose
 libgdk-x11-2.0.so.0:_gdk_window_process_updates_recurse
 libgdk-x11-2.0.so.0:_gdk_window_update_size
 libgdk-x11-2.0.so.0:_gdk_windowing_after_process_all_updates
@@ -108,8 +109,10 @@ libgdk-x11-2.0.so.0:_gdk_x11_cursor_update_theme
 libgdk-x11-2.0.so.0:_gdk_x11_drawable_finish
 libgdk-x11-2.0.so.0:_gdk_x11_events_init_screen
 libgdk-x11-2.0.so.0:_gdk_x11_events_uninit_screen
+libgdk-x11-2.0.so.0:_gdk_x11_gc_flush
 libgdk-x11-2.0.so.0:_gdk_x11_get_group_for_state
 libgdk-x11-2.0.so.0:_gdk_x11_get_xft_setting
+libgdk-x11-2.0.so.0:_gdk_x11_have_render
 libgdk-x11-2.0.so.0:_gdk_x11_image_get_shm_pixmap
 libgdk-x11-2.0.so.0:_gdk_x11_precache_atoms
 libgdk-x11-2.0.so.0:_gdk_x11_roundtrip_async
@@ -911,7 +914,6 @@ libgdk-x11-2.0.so.0:gdk_xid_table_lookup_for_display
 libgdk-x11-2.0.so.0:gdkx_colormap_get
 libgdk-x11-2.0.so.0:gdkx_visual_get
 libgtk-x11-2.0.so.0:_builtin_cache
-libgtk-x11-2.0.so.0:_free_signal_info
 libgtk-x11-2.0.so.0:_gtk_accel_group_attach
 libgtk-x11-2.0.so.0:_gtk_accel_group_detach
 libgtk-x11-2.0.so.0:_gtk_accel_group_reconnect
@@ -932,11 +934,8 @@ libgtk-x11-2.0.so.0:_gtk_binding_reset_parsed
 libgtk-x11-2.0.so.0:_gtk_box_get_spacing_set
 libgtk-x11-2.0.so.0:_gtk_box_set_old_defaults
 libgtk-x11-2.0.so.0:_gtk_box_set_spacing_set
-libgtk-x11-2.0.so.0:_gtk_builder_add
 libgtk-x11-2.0.so.0:_gtk_builder_add_signals
-libgtk-x11-2.0.so.0:_gtk_builder_construct
 libgtk-x11-2.0.so.0:_gtk_builder_finish
-libgtk-x11-2.0.so.0:_gtk_builder_parser_parse_buffer
 libgtk-x11-2.0.so.0:_gtk_builder_parser_translate
 libgtk-x11-2.0.so.0:_gtk_button_event_triggers_context_menu
 libgtk-x11-2.0.so.0:_gtk_button_paint
@@ -995,6 +994,9 @@ libgtk-x11-2.0.so.0:_gtk_file_system_model_add_editable
 libgtk-x11-2.0.so.0:_gtk_file_system_model_clear_cache
 libgtk-x11-2.0.so.0:_gtk_file_system_model_get_cancellable
 libgtk-x11-2.0.so.0:_gtk_file_system_model_get_file
+libgtk-x11-2.0.so.0:_gtk_file_system_model_get_info
+libgtk-x11-2.0.so.0:_gtk_file_system_model_get_iter_for_file
+libgtk-x11-2.0.so.0:_gtk_file_system_model_get_value
 libgtk-x11-2.0.so.0:_gtk_file_system_model_iter_is_filtered_out
 libgtk-x11-2.0.so.0:_gtk_file_system_model_iter_is_visible
 libgtk-x11-2.0.so.0:_gtk_file_system_model_new
@@ -1016,9 +1018,12 @@ libgtk-x11-2.0.so.0:_gtk_get_lc_ctype
 libgtk-x11-2.0.so.0:_gtk_hbutton_box_get_layout_default
 libgtk-x11-2.0.so.0:_gtk_icon_cache_add_icons
 libgtk-x11-2.0.so.0:_gtk_icon_cache_get_directory_index
+libgtk-x11-2.0.so.0:_gtk_icon_cache_get_icon
 libgtk-x11-2.0.so.0:_gtk_icon_cache_get_icon_data
 libgtk-x11-2.0.so.0:_gtk_icon_cache_get_icon_flags
+libgtk-x11-2.0.so.0:_gtk_icon_cache_has_icon
 libgtk-x11-2.0.so.0:_gtk_icon_cache_new
+libgtk-x11-2.0.so.0:_gtk_icon_cache_new_for_path
 libgtk-x11-2.0.so.0:_gtk_icon_cache_ref
 libgtk-x11-2.0.so.0:_gtk_icon_cache_unref
 libgtk-x11-2.0.so.0:_gtk_icon_factory_list_ids
@@ -1037,7 +1042,6 @@ libgtk-x11-2.0.so.0:_gtk_mark_segment_set_tree
 libgtk-x11-2.0.so.0:_gtk_menu_bar_cycle_focus
 libgtk-x11-2.0.so.0:_gtk_menu_item_popdown_submenu
 libgtk-x11-2.0.so.0:_gtk_menu_item_popup_submenu
-libgtk-x11-2.0.so.0:_gtk_menu_item_refresh_accel_path
 libgtk-x11-2.0.so.0:_gtk_menu_item_set_placement
 libgtk-x11-2.0.so.0:_gtk_menu_shell_add_mnemonic
 libgtk-x11-2.0.so.0:_gtk_menu_shell_get_keyboard_mode
@@ -1045,7 +1049,6 @@ libgtk-x11-2.0.so.0:_gtk_menu_shell_get_popup_delay
 libgtk-x11-2.0.so.0:_gtk_menu_shell_remove_mnemonic
 libgtk-x11-2.0.so.0:_gtk_menu_shell_select_last
 libgtk-x11-2.0.so.0:_gtk_menu_shell_set_keyboard_mode
-libgtk-x11-2.0.so.0:_gtk_menu_shell_update_mnemonics
 libgtk-x11-2.0.so.0:_gtk_mnemonic_hash_foreach
 libgtk-x11-2.0.so.0:_gtk_mnemonic_hash_free
 libgtk-x11-2.0.so.0:_gtk_mnemonic_hash_lookup
@@ -1117,19 +1120,15 @@ libgtk-x11-2.0.so.0:_gtk_rc_style_get_color_hashes
 libgtk-x11-2.0.so.0:_gtk_rc_style_set_rc_property
 libgtk-x11-2.0.so.0:_gtk_rc_style_unset_rc_property
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_default_new
-libgtk-x11-2.0.so.0:_gtk_recent_chooser_delegate_iface_init
-libgtk-x11-2.0.so.0:_gtk_recent_chooser_get_items
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_get_recent_manager
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_get_related_action
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_get_use_action_appearance
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_install_properties
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_item_activated
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_selection_changed
-libgtk-x11-2.0.so.0:_gtk_recent_chooser_set_delegate
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_set_related_action
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_set_use_action_appearance
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_sync_action_properties
-libgtk-x11-2.0.so.0:_gtk_recent_chooser_update
 libgtk-x11-2.0.so.0:_gtk_recent_manager_sync
 libgtk-x11-2.0.so.0:_gtk_scrolled_window_get_scrollbar_spacing
 libgtk-x11-2.0.so.0:_gtk_search_engine_beagle_new
@@ -1204,9 +1203,9 @@ libgtk-x11-2.0.so.0:_gtk_text_btree_spew
 libgtk-x11-2.0.so.0:_gtk_text_btree_unref
 libgtk-x11-2.0.so.0:_gtk_text_btree_unregister_child_anchor
 libgtk-x11-2.0.so.0:_gtk_text_btree_validate
+libgtk-x11-2.0.so.0:_gtk_text_buffer_deserialize_rich_text
 libgtk-x11-2.0.so.0:_gtk_text_buffer_get_btree
 libgtk-x11-2.0.so.0:_gtk_text_buffer_notify_will_remove_tag
-libgtk-x11-2.0.so.0:_gtk_text_buffer_serialize_rich_text
 libgtk-x11-2.0.so.0:_gtk_text_iter_get_any_segment
 libgtk-x11-2.0.so.0:_gtk_text_iter_get_btree
 libgtk-x11-2.0.so.0:_gtk_text_iter_get_segment_byte
