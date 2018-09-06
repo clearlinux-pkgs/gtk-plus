@@ -27,6 +27,7 @@ libgdk-x11-2.0.so.0:_gdk_dnd_init
 libgdk-x11-2.0.so.0:_gdk_drawable_create_cairo_surface
 libgdk-x11-2.0.so.0:_gdk_drawable_get_scratch_gc
 libgdk-x11-2.0.so.0:_gdk_drawable_get_subwindow_scratch_gc
+libgdk-x11-2.0.so.0:_gdk_drawable_impl_x11_get_type
 libgdk-x11-2.0.so.0:_gdk_error_code
 libgdk-x11-2.0.so.0:_gdk_error_warnings
 libgdk-x11-2.0.so.0:_gdk_event_queue_append
@@ -945,12 +946,10 @@ libgtk-x11-2.0.so.0:_gtk_clipboard_handle_event
 libgtk-x11-2.0.so.0:_gtk_clipboard_store_all
 libgtk-x11-2.0.so.0:_gtk_clist_create_cell_layout
 libgtk-x11-2.0.so.0:_gtk_container_child_composite_name
-libgtk-x11-2.0.so.0:_gtk_custom_paper_unix_dialog_new
 libgtk-x11-2.0.so.0:_gtk_dialog_set_ignore_separator
 libgtk-x11-2.0.so.0:_gtk_drag_dest_handle_event
 libgtk-x11-2.0.so.0:_gtk_drag_source_handle_event
 libgtk-x11-2.0.so.0:_gtk_entry_completion_popup
-libgtk-x11-2.0.so.0:_gtk_entry_get_borders
 libgtk-x11-2.0.so.0:_gtk_entry_reset_im_context
 libgtk-x11-2.0.so.0:_gtk_file_chooser_default_new
 libgtk-x11-2.0.so.0:_gtk_file_chooser_delegate_get_quark
@@ -1085,7 +1084,6 @@ libgtk-x11-2.0.so.0:_gtk_print_context_set_hard_margins
 libgtk-x11-2.0.so.0:_gtk_print_context_translate_into_margin
 libgtk-x11-2.0.so.0:_gtk_print_convert_from_mm
 libgtk-x11-2.0.so.0:_gtk_print_convert_to_mm
-libgtk-x11-2.0.so.0:_gtk_print_load_custom_papers
 libgtk-x11-2.0.so.0:_gtk_print_operation_platform_backend_create_preview_surface
 libgtk-x11-2.0.so.0:_gtk_print_operation_platform_backend_launch_preview
 libgtk-x11-2.0.so.0:_gtk_print_operation_platform_backend_preview_start_page
@@ -1122,22 +1120,16 @@ libgtk-x11-2.0.so.0:_gtk_rc_style_get_color_hashes
 libgtk-x11-2.0.so.0:_gtk_rc_style_set_rc_property
 libgtk-x11-2.0.so.0:_gtk_rc_style_unset_rc_property
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_default_new
-libgtk-x11-2.0.so.0:_gtk_recent_chooser_delegate_iface_init
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_get_recent_manager
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_get_related_action
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_get_use_action_appearance
-libgtk-x11-2.0.so.0:_gtk_recent_chooser_install_properties
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_item_activated
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_selection_changed
-libgtk-x11-2.0.so.0:_gtk_recent_chooser_set_delegate
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_set_related_action
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_set_use_action_appearance
 libgtk-x11-2.0.so.0:_gtk_recent_chooser_sync_action_properties
 libgtk-x11-2.0.so.0:_gtk_recent_manager_sync
-libgtk-x11-2.0.so.0:_gtk_scrolled_window_get_scrollbar_spacing
 libgtk-x11-2.0.so.0:_gtk_search_engine_beagle_new
-libgtk-x11-2.0.so.0:_gtk_search_engine_error
-libgtk-x11-2.0.so.0:_gtk_search_engine_hits_added
 libgtk-x11-2.0.so.0:_gtk_search_engine_hits_subtracted
 libgtk-x11-2.0.so.0:_gtk_search_engine_new
 libgtk-x11-2.0.so.0:_gtk_search_engine_set_query
@@ -1210,7 +1202,6 @@ libgtk-x11-2.0.so.0:_gtk_text_btree_validate
 libgtk-x11-2.0.so.0:_gtk_text_buffer_deserialize_rich_text
 libgtk-x11-2.0.so.0:_gtk_text_buffer_get_btree
 libgtk-x11-2.0.so.0:_gtk_text_buffer_notify_will_remove_tag
-libgtk-x11-2.0.so.0:_gtk_text_buffer_serialize_rich_text
 libgtk-x11-2.0.so.0:_gtk_text_iter_get_any_segment
 libgtk-x11-2.0.so.0:_gtk_text_iter_get_btree
 libgtk-x11-2.0.so.0:_gtk_text_iter_get_segment_byte
@@ -1232,6 +1223,7 @@ libgtk-x11-2.0.so.0:_gtk_text_tag_table_add_buffer
 libgtk-x11-2.0.so.0:_gtk_text_tag_table_remove_buffer
 libgtk-x11-2.0.so.0:_gtk_text_util_create_rich_drag_icon
 libgtk-x11-2.0.so.0:_gtk_toggle_segment_new
+libgtk-x11-2.0.so.0:_gtk_tool_item_create_menu_proxy
 libgtk-x11-2.0.so.0:_gtk_tool_item_group_get_height_for_width
 libgtk-x11-2.0.so.0:_gtk_tool_item_group_get_size_for_limit
 libgtk-x11-2.0.so.0:_gtk_tool_item_group_get_width_for_height

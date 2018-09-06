@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 28
+Release  : 29
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -71,6 +71,7 @@ BuildRequires : pkgconfig(pango)
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xext)
 Patch1: 0001-Convert-im-multipress-to-stateless-configuration.patch
+Patch2: 0001-run-gtk-builder-convert-using-python2.patch
 
 %description
 General Information
@@ -169,6 +170,7 @@ locales components for the gtk+ package.
 %prep
 %setup -q -n gtk+-2.24.32
 %patch1 -p1
+%patch2 -p1
 pushd ..
 cp -a gtk+-2.24.32 build32
 popd
@@ -178,7 +180,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535065127
+export SOURCE_DATE_EPOCH=1536260786
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -203,9 +205,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+cd ../build32;
+make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1535065127
+export SOURCE_DATE_EPOCH=1536260786
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/gtk+
 cp COPYING %{buildroot}/usr/share/doc/gtk+/COPYING
