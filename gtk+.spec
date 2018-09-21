@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 30
+Release  : 31
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
