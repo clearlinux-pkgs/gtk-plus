@@ -4,19 +4,20 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 32
+Release  : 33
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
 Group    : Development/Tools
 License  : LGPL-2.0 LGPL-2.1
-Requires: gtk+-bin
-Requires: gtk+-data
-Requires: gtk+-lib
-Requires: gtk+-license
-Requires: gtk+-locales
+Requires: gtk+-bin = %{version}-%{release}
+Requires: gtk+-data = %{version}-%{release}
+Requires: gtk+-lib = %{version}-%{release}
+Requires: gtk+-license = %{version}-%{release}
+Requires: gtk+-locales = %{version}-%{release}
 BuildRequires : automake
 BuildRequires : automake-dev
+BuildRequires : buildreq-gnome
 BuildRequires : cups-dev
 BuildRequires : docbook-xml
 BuildRequires : e2fsprogs-dev
@@ -70,21 +71,25 @@ BuildRequires : pkgconfig(gmodule-2.0)
 BuildRequires : pkgconfig(pango)
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xext)
+BuildRequires : shared-mime-info
 Patch1: 0001-Convert-im-multipress-to-stateless-configuration.patch
+Patch2: nodemos.patch
 
 %description
-General Information
-===================
-This is GTK+ version 2.24.32. GTK+ is a multi-platform toolkit for
-creating graphical user interfaces. Offering a complete set of widgets,
-GTK+ is suitable for projects ranging from small one-off projects to
-complete application suites.
+GTK+ is part of the GNOME git repository. At the current time, any
+person with write access to the GNOME repository, can make changes to
+GTK+. This is a good thing, in that it encourages many people to work
+on GTK+, and progress can be made quickly. However, GTK+ is a fairly
+large and complicated package that many other things depend on, so to
+avoid unnecessary breakage, and to take advantage of the knowledge
+about GTK+ that has been built up over the years, we'd like to ask
+people committing to GTK+ to follow a few rules:
 
 %package bin
 Summary: bin components for the gtk+ package.
 Group: Binaries
-Requires: gtk+-data
-Requires: gtk+-license
+Requires: gtk+-data = %{version}-%{release}
+Requires: gtk+-license = %{version}-%{release}
 
 %description bin
 bin components for the gtk+ package.
@@ -101,10 +106,10 @@ data components for the gtk+ package.
 %package dev
 Summary: dev components for the gtk+ package.
 Group: Development
-Requires: gtk+-lib
-Requires: gtk+-bin
-Requires: gtk+-data
-Provides: gtk+-devel
+Requires: gtk+-lib = %{version}-%{release}
+Requires: gtk+-bin = %{version}-%{release}
+Requires: gtk+-data = %{version}-%{release}
+Provides: gtk+-devel = %{version}-%{release}
 
 %description dev
 dev components for the gtk+ package.
@@ -113,10 +118,10 @@ dev components for the gtk+ package.
 %package dev32
 Summary: dev32 components for the gtk+ package.
 Group: Default
-Requires: gtk+-lib32
-Requires: gtk+-bin
-Requires: gtk+-data
-Requires: gtk+-dev
+Requires: gtk+-lib32 = %{version}-%{release}
+Requires: gtk+-bin = %{version}-%{release}
+Requires: gtk+-data = %{version}-%{release}
+Requires: gtk+-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the gtk+ package.
@@ -133,8 +138,8 @@ doc components for the gtk+ package.
 %package lib
 Summary: lib components for the gtk+ package.
 Group: Libraries
-Requires: gtk+-data
-Requires: gtk+-license
+Requires: gtk+-data = %{version}-%{release}
+Requires: gtk+-license = %{version}-%{release}
 
 %description lib
 lib components for the gtk+ package.
@@ -143,8 +148,8 @@ lib components for the gtk+ package.
 %package lib32
 Summary: lib32 components for the gtk+ package.
 Group: Default
-Requires: gtk+-data
-Requires: gtk+-license
+Requires: gtk+-data = %{version}-%{release}
+Requires: gtk+-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the gtk+ package.
@@ -169,6 +174,7 @@ locales components for the gtk+ package.
 %prep
 %setup -q -n gtk+-2.24.32
 %patch1 -p1
+%patch2 -p1
 pushd ..
 cp -a gtk+-2.24.32 build32
 popd
@@ -178,7 +184,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1536360636
+export SOURCE_DATE_EPOCH=1547409994
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -190,6 +196,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -f
 make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export ASFLAGS="$ASFLAGS --32"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
@@ -204,14 +211,14 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1536360636
+export SOURCE_DATE_EPOCH=1547409994
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/gtk+
-cp COPYING %{buildroot}/usr/share/doc/gtk+/COPYING
-cp gdk/COPYING %{buildroot}/usr/share/doc/gtk+/gdk_COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
+cp COPYING %{buildroot}/usr/share/package-licenses/gtk+/COPYING
+cp gdk/COPYING %{buildroot}/usr/share/package-licenses/gtk+/gdk_COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -235,7 +242,6 @@ popd
 %defattr(-,root,root,-)
 %exclude /usr/bin/gtk-builder-convert
 %exclude /usr/bin/gtk-update-icon-cache
-/usr/bin/gtk-demo
 /usr/bin/gtk-query-immodules-2.0
 
 %files data
@@ -245,59 +251,6 @@ popd
 /usr/lib64/girepository-1.0/Gtk-2.0.typelib
 /usr/share/defaults/gtk-2.0/im-multipress.conf
 /usr/share/gir-1.0/*.gir
-/usr/share/gtk-2.0/demo/alphatest.png
-/usr/share/gtk-2.0/demo/apple-red.png
-/usr/share/gtk-2.0/demo/appwindow.c
-/usr/share/gtk-2.0/demo/assistant.c
-/usr/share/gtk-2.0/demo/background.jpg
-/usr/share/gtk-2.0/demo/builder.c
-/usr/share/gtk-2.0/demo/button_box.c
-/usr/share/gtk-2.0/demo/changedisplay.c
-/usr/share/gtk-2.0/demo/clipboard.c
-/usr/share/gtk-2.0/demo/colorsel.c
-/usr/share/gtk-2.0/demo/combobox.c
-/usr/share/gtk-2.0/demo/demo.ui
-/usr/share/gtk-2.0/demo/dialog.c
-/usr/share/gtk-2.0/demo/drawingarea.c
-/usr/share/gtk-2.0/demo/editable_cells.c
-/usr/share/gtk-2.0/demo/entry_buffer.c
-/usr/share/gtk-2.0/demo/entry_completion.c
-/usr/share/gtk-2.0/demo/expander.c
-/usr/share/gtk-2.0/demo/floppybuddy.gif
-/usr/share/gtk-2.0/demo/gnome-applets.png
-/usr/share/gtk-2.0/demo/gnome-calendar.png
-/usr/share/gtk-2.0/demo/gnome-foot.png
-/usr/share/gtk-2.0/demo/gnome-fs-directory.png
-/usr/share/gtk-2.0/demo/gnome-fs-regular.png
-/usr/share/gtk-2.0/demo/gnome-gimp.png
-/usr/share/gtk-2.0/demo/gnome-gmush.png
-/usr/share/gtk-2.0/demo/gnome-gsame.png
-/usr/share/gtk-2.0/demo/gnu-keys.png
-/usr/share/gtk-2.0/demo/gtk-logo-rgb.gif
-/usr/share/gtk-2.0/demo/hypertext.c
-/usr/share/gtk-2.0/demo/iconview.c
-/usr/share/gtk-2.0/demo/iconview_edit.c
-/usr/share/gtk-2.0/demo/images.c
-/usr/share/gtk-2.0/demo/infobar.c
-/usr/share/gtk-2.0/demo/links.c
-/usr/share/gtk-2.0/demo/list_store.c
-/usr/share/gtk-2.0/demo/menus.c
-/usr/share/gtk-2.0/demo/offscreen_window.c
-/usr/share/gtk-2.0/demo/offscreen_window2.c
-/usr/share/gtk-2.0/demo/panes.c
-/usr/share/gtk-2.0/demo/pickers.c
-/usr/share/gtk-2.0/demo/pixbufs.c
-/usr/share/gtk-2.0/demo/printing.c
-/usr/share/gtk-2.0/demo/rotated_text.c
-/usr/share/gtk-2.0/demo/search_entry.c
-/usr/share/gtk-2.0/demo/sizegroup.c
-/usr/share/gtk-2.0/demo/spinner.c
-/usr/share/gtk-2.0/demo/stock_browser.c
-/usr/share/gtk-2.0/demo/textscroll.c
-/usr/share/gtk-2.0/demo/textview.c
-/usr/share/gtk-2.0/demo/toolpalette.c
-/usr/share/gtk-2.0/demo/tree_store.c
-/usr/share/gtk-2.0/demo/ui_manager.c
 /usr/share/themes/Default/gtk-2.0-key/gtkrc
 /usr/share/themes/Emacs/gtk-2.0-key/gtkrc
 /usr/share/themes/Raleigh/gtk-2.0/gtkrc
@@ -1249,9 +1202,9 @@ popd
 /usr/lib32/libgtk-x11-2.0.so.0.2400.32
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/gtk+/COPYING
-/usr/share/doc/gtk+/gdk_COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gtk+/COPYING
+/usr/share/package-licenses/gtk+/gdk_COPYING
 
 %files locales -f gtk20-properties.lang -f gtk20.lang
 %defattr(-,root,root,-)
