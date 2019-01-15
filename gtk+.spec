@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 33
+Release  : 34
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -73,7 +73,6 @@ BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xext)
 BuildRequires : shared-mime-info
 Patch1: 0001-Convert-im-multipress-to-stateless-configuration.patch
-Patch2: nodemos.patch
 
 %description
 GTK+ is part of the GNOME git repository. At the current time, any
@@ -174,7 +173,6 @@ locales components for the gtk+ package.
 %prep
 %setup -q -n gtk+-2.24.32
 %patch1 -p1
-%patch2 -p1
 pushd ..
 cp -a gtk+-2.24.32 build32
 popd
@@ -184,7 +182,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547409994
+export SOURCE_DATE_EPOCH=1547572326
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -214,7 +212,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1547409994
+export SOURCE_DATE_EPOCH=1547572326
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp COPYING %{buildroot}/usr/share/package-licenses/gtk+/COPYING
@@ -242,6 +240,7 @@ popd
 %defattr(-,root,root,-)
 %exclude /usr/bin/gtk-builder-convert
 %exclude /usr/bin/gtk-update-icon-cache
+/usr/bin/gtk-demo
 /usr/bin/gtk-query-immodules-2.0
 
 %files data
@@ -251,6 +250,59 @@ popd
 /usr/lib64/girepository-1.0/Gtk-2.0.typelib
 /usr/share/defaults/gtk-2.0/im-multipress.conf
 /usr/share/gir-1.0/*.gir
+/usr/share/gtk-2.0/demo/alphatest.png
+/usr/share/gtk-2.0/demo/apple-red.png
+/usr/share/gtk-2.0/demo/appwindow.c
+/usr/share/gtk-2.0/demo/assistant.c
+/usr/share/gtk-2.0/demo/background.jpg
+/usr/share/gtk-2.0/demo/builder.c
+/usr/share/gtk-2.0/demo/button_box.c
+/usr/share/gtk-2.0/demo/changedisplay.c
+/usr/share/gtk-2.0/demo/clipboard.c
+/usr/share/gtk-2.0/demo/colorsel.c
+/usr/share/gtk-2.0/demo/combobox.c
+/usr/share/gtk-2.0/demo/demo.ui
+/usr/share/gtk-2.0/demo/dialog.c
+/usr/share/gtk-2.0/demo/drawingarea.c
+/usr/share/gtk-2.0/demo/editable_cells.c
+/usr/share/gtk-2.0/demo/entry_buffer.c
+/usr/share/gtk-2.0/demo/entry_completion.c
+/usr/share/gtk-2.0/demo/expander.c
+/usr/share/gtk-2.0/demo/floppybuddy.gif
+/usr/share/gtk-2.0/demo/gnome-applets.png
+/usr/share/gtk-2.0/demo/gnome-calendar.png
+/usr/share/gtk-2.0/demo/gnome-foot.png
+/usr/share/gtk-2.0/demo/gnome-fs-directory.png
+/usr/share/gtk-2.0/demo/gnome-fs-regular.png
+/usr/share/gtk-2.0/demo/gnome-gimp.png
+/usr/share/gtk-2.0/demo/gnome-gmush.png
+/usr/share/gtk-2.0/demo/gnome-gsame.png
+/usr/share/gtk-2.0/demo/gnu-keys.png
+/usr/share/gtk-2.0/demo/gtk-logo-rgb.gif
+/usr/share/gtk-2.0/demo/hypertext.c
+/usr/share/gtk-2.0/demo/iconview.c
+/usr/share/gtk-2.0/demo/iconview_edit.c
+/usr/share/gtk-2.0/demo/images.c
+/usr/share/gtk-2.0/demo/infobar.c
+/usr/share/gtk-2.0/demo/links.c
+/usr/share/gtk-2.0/demo/list_store.c
+/usr/share/gtk-2.0/demo/menus.c
+/usr/share/gtk-2.0/demo/offscreen_window.c
+/usr/share/gtk-2.0/demo/offscreen_window2.c
+/usr/share/gtk-2.0/demo/panes.c
+/usr/share/gtk-2.0/demo/pickers.c
+/usr/share/gtk-2.0/demo/pixbufs.c
+/usr/share/gtk-2.0/demo/printing.c
+/usr/share/gtk-2.0/demo/rotated_text.c
+/usr/share/gtk-2.0/demo/search_entry.c
+/usr/share/gtk-2.0/demo/sizegroup.c
+/usr/share/gtk-2.0/demo/spinner.c
+/usr/share/gtk-2.0/demo/stock_browser.c
+/usr/share/gtk-2.0/demo/textscroll.c
+/usr/share/gtk-2.0/demo/textview.c
+/usr/share/gtk-2.0/demo/toolpalette.c
+/usr/share/gtk-2.0/demo/tree_store.c
+/usr/share/gtk-2.0/demo/ui_manager.c
 /usr/share/themes/Default/gtk-2.0-key/gtkrc
 /usr/share/themes/Emacs/gtk-2.0-key/gtkrc
 /usr/share/themes/Raleigh/gtk-2.0/gtkrc
