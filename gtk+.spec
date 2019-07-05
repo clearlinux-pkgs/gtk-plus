@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 36
+Release  : 37
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -39,7 +39,10 @@ BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
+BuildRequires : ibus-dev
 BuildRequires : krb5-dev
+BuildRequires : libXcursor-dev
+BuildRequires : libXcursor-dev32
 BuildRequires : libXdamage-dev
 BuildRequires : libXdamage-dev32
 BuildRequires : libXfixes-dev
@@ -109,6 +112,7 @@ Requires: gtk+-lib = %{version}-%{release}
 Requires: gtk+-bin = %{version}-%{release}
 Requires: gtk+-data = %{version}-%{release}
 Provides: gtk+-devel = %{version}-%{release}
+Requires: gtk+ = %{version}-%{release}
 Requires: gtk+ = %{version}-%{release}
 
 %description dev
@@ -182,8 +186,9 @@ popd
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557010597
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1562309887
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -191,7 +196,8 @@ export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-m
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-%reconfigure --disable-static --disable-papi
+%reconfigure --disable-static --disable-papi \
+--with-xinput=xfree
 make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
@@ -199,12 +205,13 @@ export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
 export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
-%reconfigure --disable-static --disable-papi --disable-papi --disable-cups --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+%reconfigure --disable-static --disable-papi \
+--with-xinput=xfree --disable-papi --disable-cups --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -213,7 +220,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1557010597
+export SOURCE_DATE_EPOCH=1562309887
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp COPYING %{buildroot}/usr/share/package-licenses/gtk+/COPYING

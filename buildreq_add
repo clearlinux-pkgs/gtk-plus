@@ -21,3 +21,5 @@ e2fsprogs-dev
 fribidi-dev
 fribidi-dev32
 shared-mime-info
+ibus-dev
+libXcursor-dev32

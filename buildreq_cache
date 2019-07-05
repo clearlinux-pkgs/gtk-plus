@@ -1,4 +1,5 @@
 2.24.32
 gnutls-dev
+libXcursor-dev
 perl
 pkg-config
