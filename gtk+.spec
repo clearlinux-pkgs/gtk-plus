@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 37
+Release  : 38
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -78,14 +78,12 @@ BuildRequires : shared-mime-info
 Patch1: 0001-Convert-im-multipress-to-stateless-configuration.patch
 
 %description
-GTK+ is part of the GNOME git repository. At the current time, any
-person with write access to the GNOME repository, can make changes to
-GTK+. This is a good thing, in that it encourages many people to work
-on GTK+, and progress can be made quickly. However, GTK+ is a fairly
-large and complicated package that many other things depend on, so to
-avoid unnecessary breakage, and to take advantage of the knowledge
-about GTK+ that has been built up over the years, we'd like to ask
-people committing to GTK+ to follow a few rules:
+General Information
+===================
+This is GTK+ version 2.24.32. GTK+ is a multi-platform toolkit for
+creating graphical user interfaces. Offering a complete set of widgets,
+GTK+ is suitable for projects ranging from small one-off projects to
+complete application suites.
 
 %package bin
 Summary: bin components for the gtk+ package.
@@ -112,7 +110,6 @@ Requires: gtk+-lib = %{version}-%{release}
 Requires: gtk+-bin = %{version}-%{release}
 Requires: gtk+-data = %{version}-%{release}
 Provides: gtk+-devel = %{version}-%{release}
-Requires: gtk+ = %{version}-%{release}
 Requires: gtk+ = %{version}-%{release}
 
 %description dev
@@ -187,7 +184,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1562309887
+export SOURCE_DATE_EPOCH=1568860074
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -202,9 +199,9 @@ make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %reconfigure --disable-static --disable-papi \
 --with-xinput=xfree --disable-papi --disable-cups --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
@@ -220,7 +217,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1562309887
+export SOURCE_DATE_EPOCH=1568860074
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp COPYING %{buildroot}/usr/share/package-licenses/gtk+/COPYING
@@ -237,6 +234,9 @@ popd
 %make_install
 %find_lang gtk20-properties
 %find_lang gtk20
+## Remove excluded files
+rm -f %{buildroot}/usr/bin/gtk-update-icon-cache
+rm -f %{buildroot}/usr/bin/gtk-builder-convert
 
 %files
 %defattr(-,root,root,-)
@@ -246,8 +246,6 @@ popd
 
 %files bin
 %defattr(-,root,root,-)
-%exclude /usr/bin/gtk-builder-convert
-%exclude /usr/bin/gtk-update-icon-cache
 /usr/bin/gtk-demo
 /usr/bin/gtk-query-immodules-2.0
 
