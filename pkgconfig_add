@@ -3,12 +3,14 @@
 # desirable. One name per line, no whitespace.
 #
 gdk-pixbuf-2.0
+harfbuzz
 pango
 atk
 cairo
 x11
 xext
 32gdk-pixbuf-2.0
+32harfbuzz
 32pango
 32atk
 32cairo

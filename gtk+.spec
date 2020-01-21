@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 39
+Release  : 40
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -62,6 +62,7 @@ BuildRequires : pkgconfig(32cairo)
 BuildRequires : pkgconfig(32gdk-pixbuf-2.0)
 BuildRequires : pkgconfig(32glib-2.0)
 BuildRequires : pkgconfig(32gmodule-2.0)
+BuildRequires : pkgconfig(32harfbuzz)
 BuildRequires : pkgconfig(32pango)
 BuildRequires : pkgconfig(32x11)
 BuildRequires : pkgconfig(32xext)
@@ -71,6 +72,7 @@ BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(gdk-pixbuf-2.0)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(gmodule-2.0)
+BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(pango)
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xext)
@@ -174,6 +176,7 @@ locales components for the gtk+ package.
 
 %prep
 %setup -q -n gtk+-2.24.32
+cd %{_builddir}/gtk+-2.24.32
 %patch1 -p1
 pushd ..
 cp -a gtk+-2.24.32 build32
@@ -184,7 +187,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568860074
+export SOURCE_DATE_EPOCH=1579642850
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -217,11 +220,11 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1568860074
+export SOURCE_DATE_EPOCH=1579642850
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
-cp COPYING %{buildroot}/usr/share/package-licenses/gtk+/COPYING
-cp gdk/COPYING %{buildroot}/usr/share/package-licenses/gtk+/gdk_COPYING
+cp %{_builddir}/gtk+-2.24.32/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
+cp %{_builddir}/gtk+-2.24.32/gdk/COPYING %{buildroot}/usr/share/package-licenses/gtk+/fdeb196b87202005f0c9ee4044f6a7da68a43801
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -1261,8 +1264,8 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/gtk+/COPYING
-/usr/share/package-licenses/gtk+/gdk_COPYING
+/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
+/usr/share/package-licenses/gtk+/fdeb196b87202005f0c9ee4044f6a7da68a43801
 
 %files locales -f gtk20-properties.lang -f gtk20.lang
 %defattr(-,root,root,-)
