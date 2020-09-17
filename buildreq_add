@@ -6,20 +6,12 @@ gdk-pixbuf
 gobject-introspection-dev
 gobject-introspection
 libXinerama-dev
-libXinerama-dev32
-gdk-pixbuf-dev32
-freetype-dev32
-fontconfig-dev32
-libXdamage-dev32
 libXdamage-dev
-libXfixes-dev32
 libXfixes-dev
 # required because of cups
 cups-dev
 krb5-dev
 e2fsprogs-dev
 fribidi-dev
-fribidi-dev32
 shared-mime-info
 ibus-dev
-libXcursor-dev32

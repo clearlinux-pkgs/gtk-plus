@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.32
-Release  : 40
+Release  : 41
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.32.tar.xz
 Summary  : GNOME Accessibility Implementation Library
@@ -21,19 +21,10 @@ BuildRequires : buildreq-gnome
 BuildRequires : cups-dev
 BuildRequires : docbook-xml
 BuildRequires : e2fsprogs-dev
-BuildRequires : fontconfig-dev32
-BuildRequires : freetype-dev32
 BuildRequires : fribidi-dev
-BuildRequires : fribidi-dev32
-BuildRequires : gcc-dev32
-BuildRequires : gcc-libgcc32
-BuildRequires : gcc-libstdc++32
 BuildRequires : gdk-pixbuf
-BuildRequires : gdk-pixbuf-dev32
 BuildRequires : gettext
 BuildRequires : gettext-bin
-BuildRequires : glibc-dev32
-BuildRequires : glibc-libc32
 BuildRequires : gnutls-dev
 BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
@@ -42,13 +33,9 @@ BuildRequires : gtk-doc-dev
 BuildRequires : ibus-dev
 BuildRequires : krb5-dev
 BuildRequires : libXcursor-dev
-BuildRequires : libXcursor-dev32
 BuildRequires : libXdamage-dev
-BuildRequires : libXdamage-dev32
 BuildRequires : libXfixes-dev
-BuildRequires : libXfixes-dev32
 BuildRequires : libXinerama-dev
-BuildRequires : libXinerama-dev32
 BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : libxslt-bin
@@ -57,16 +44,6 @@ BuildRequires : perl
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkg-config
 BuildRequires : pkg-config-dev
-BuildRequires : pkgconfig(32atk)
-BuildRequires : pkgconfig(32cairo)
-BuildRequires : pkgconfig(32gdk-pixbuf-2.0)
-BuildRequires : pkgconfig(32glib-2.0)
-BuildRequires : pkgconfig(32gmodule-2.0)
-BuildRequires : pkgconfig(32harfbuzz)
-BuildRequires : pkgconfig(32pango)
-BuildRequires : pkgconfig(32x11)
-BuildRequires : pkgconfig(32xext)
-BuildRequires : pkgconfig(32xrender)
 BuildRequires : pkgconfig(atk)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(gdk-pixbuf-2.0)
@@ -118,18 +95,6 @@ Requires: gtk+ = %{version}-%{release}
 dev components for the gtk+ package.
 
 
-%package dev32
-Summary: dev32 components for the gtk+ package.
-Group: Default
-Requires: gtk+-lib32 = %{version}-%{release}
-Requires: gtk+-bin = %{version}-%{release}
-Requires: gtk+-data = %{version}-%{release}
-Requires: gtk+-dev = %{version}-%{release}
-
-%description dev32
-dev32 components for the gtk+ package.
-
-
 %package doc
 Summary: doc components for the gtk+ package.
 Group: Documentation
@@ -146,16 +111,6 @@ Requires: gtk+-license = %{version}-%{release}
 
 %description lib
 lib components for the gtk+ package.
-
-
-%package lib32
-Summary: lib32 components for the gtk+ package.
-Group: Default
-Requires: gtk+-data = %{version}-%{release}
-Requires: gtk+-license = %{version}-%{release}
-
-%description lib32
-lib32 components for the gtk+ package.
 
 
 %package license
@@ -178,62 +133,38 @@ locales components for the gtk+ package.
 %setup -q -n gtk+-2.24.32
 cd %{_builddir}/gtk+-2.24.32
 %patch1 -p1
-pushd ..
-cp -a gtk+-2.24.32 build32
-popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1579642850
+export SOURCE_DATE_EPOCH=1600301099
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 %reconfigure --disable-static --disable-papi \
 --with-xinput=xfree
 make  %{?_smp_mflags}
-pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
-%reconfigure --disable-static --disable-papi \
---with-xinput=xfree --disable-papi --disable-cups --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make  %{?_smp_mflags}
-popd
 
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
-cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
+make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1579642850
+export SOURCE_DATE_EPOCH=1600301099
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp %{_builddir}/gtk+-2.24.32/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
 cp %{_builddir}/gtk+-2.24.32/gdk/COPYING %{buildroot}/usr/share/package-licenses/gtk+/fdeb196b87202005f0c9ee4044f6a7da68a43801
-pushd ../build32/
-%make_install32
-if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
-then
-pushd %{buildroot}/usr/lib32/pkgconfig
-for i in *.pc ; do ln -s $i 32$i ; done
-popd
-fi
-popd
 %make_install
 %find_lang gtk20-properties
 %find_lang gtk20
@@ -243,9 +174,6 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 
 %files
 %defattr(-,root,root,-)
-/usr/lib32/girepository-1.0/Gdk-2.0.typelib
-/usr/lib32/girepository-1.0/GdkX11-2.0.typelib
-/usr/lib32/girepository-1.0/Gtk-2.0.typelib
 
 %files bin
 %defattr(-,root,root,-)
@@ -576,7 +504,6 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintjob.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintunixdialog.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkunixprint.h
-/usr/lib32/gtk-2.0/include/gdkconfig.h
 /usr/lib64/gtk-2.0/include/gdkconfig.h
 /usr/lib64/libgailutil.so
 /usr/lib64/libgdk-x11-2.0.so
@@ -588,24 +515,6 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 /usr/lib64/pkgconfig/gtk+-unix-print-2.0.pc
 /usr/lib64/pkgconfig/gtk+-x11-2.0.pc
 /usr/share/aclocal/*.m4
-
-%files dev32
-%defattr(-,root,root,-)
-/usr/lib32/libgailutil.so
-/usr/lib32/libgdk-x11-2.0.so
-/usr/lib32/libgtk-x11-2.0.so
-/usr/lib32/pkgconfig/32gail.pc
-/usr/lib32/pkgconfig/32gdk-2.0.pc
-/usr/lib32/pkgconfig/32gdk-x11-2.0.pc
-/usr/lib32/pkgconfig/32gtk+-2.0.pc
-/usr/lib32/pkgconfig/32gtk+-unix-print-2.0.pc
-/usr/lib32/pkgconfig/32gtk+-x11-2.0.pc
-/usr/lib32/pkgconfig/gail.pc
-/usr/lib32/pkgconfig/gdk-2.0.pc
-/usr/lib32/pkgconfig/gdk-x11-2.0.pc
-/usr/lib32/pkgconfig/gtk+-2.0.pc
-/usr/lib32/pkgconfig/gtk+-unix-print-2.0.pc
-/usr/lib32/pkgconfig/gtk+-x11-2.0.pc
 
 %files doc
 %defattr(0644,root,root,0755)
@@ -1236,31 +1145,6 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 /usr/lib64/libgdk-x11-2.0.so.0.2400.32
 /usr/lib64/libgtk-x11-2.0.so.0
 /usr/lib64/libgtk-x11-2.0.so.0.2400.32
-
-%files lib32
-%defattr(-,root,root,-)
-/usr/lib32/gtk-2.0/2.10.0/engines/libpixmap.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-am-et.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-cedilla.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-cyrillic-translit.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-inuktitut.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-ipa.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-multipress.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-thai.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-er.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-ti-et.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-viqr.so
-/usr/lib32/gtk-2.0/2.10.0/immodules/im-xim.so
-/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-file.so
-/usr/lib32/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so
-/usr/lib32/gtk-2.0/modules/libferret.so
-/usr/lib32/gtk-2.0/modules/libgail.so
-/usr/lib32/libgailutil.so.18
-/usr/lib32/libgailutil.so.18.0.1
-/usr/lib32/libgdk-x11-2.0.so.0
-/usr/lib32/libgdk-x11-2.0.so.0.2400.32
-/usr/lib32/libgtk-x11-2.0.so.0
-/usr/lib32/libgtk-x11-2.0.so.0.2400.32
 
 %files license
 %defattr(0644,root,root,0755)
