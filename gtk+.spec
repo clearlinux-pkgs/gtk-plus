@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.33
-Release  : 43
+Release  : 44
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Summary  : GTK+ Unix print support
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : LGPL-2.0 LGPL-2.1
 Requires: gtk+-bin = %{version}-%{release}
 Requires: gtk+-data = %{version}-%{release}
+Requires: gtk+-filemap = %{version}-%{release}
 Requires: gtk+-lib = %{version}-%{release}
 Requires: gtk+-license = %{version}-%{release}
 Requires: gtk+-locales = %{version}-%{release}
@@ -66,6 +67,7 @@ Summary: bin components for the gtk+ package.
 Group: Binaries
 Requires: gtk+-data = %{version}-%{release}
 Requires: gtk+-license = %{version}-%{release}
+Requires: gtk+-filemap = %{version}-%{release}
 
 %description bin
 bin components for the gtk+ package.
@@ -100,11 +102,20 @@ Group: Documentation
 doc components for the gtk+ package.
 
 
+%package filemap
+Summary: filemap components for the gtk+ package.
+Group: Default
+
+%description filemap
+filemap components for the gtk+ package.
+
+
 %package lib
 Summary: lib components for the gtk+ package.
 Group: Libraries
 Requires: gtk+-data = %{version}-%{release}
 Requires: gtk+-license = %{version}-%{release}
+Requires: gtk+-filemap = %{version}-%{release}
 
 %description lib
 lib components for the gtk+ package.
@@ -130,24 +141,38 @@ locales components for the gtk+ package.
 %setup -q -n gtk+-2.24.33
 cd %{_builddir}/gtk+-2.24.33
 %patch1 -p1
+pushd ..
+cp -a gtk+-2.24.33 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1610303119
+export SOURCE_DATE_EPOCH=1634254220
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
 %reconfigure --disable-static --disable-papi \
 --with-xinput=xfree
 make  %{?_smp_mflags}
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
+%reconfigure --disable-static --disable-papi \
+--with-xinput=xfree
+make  %{?_smp_mflags}
+popd
 
 %check
 export LANG=C.UTF-8
@@ -155,19 +180,25 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check || :
+cd ../buildavx2;
+make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1610303119
+export SOURCE_DATE_EPOCH=1634254220
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp %{_builddir}/gtk+-2.24.33/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
 cp %{_builddir}/gtk+-2.24.33/gdk/COPYING %{buildroot}/usr/share/package-licenses/gtk+/fdeb196b87202005f0c9ee4044f6a7da68a43801
+pushd ../buildavx2/
+%make_install_v3
+popd
 %make_install
 %find_lang gtk20-properties
 %find_lang gtk20
 ## Remove excluded files
-rm -f %{buildroot}/usr/bin/gtk-update-icon-cache
-rm -f %{buildroot}/usr/bin/gtk-builder-convert
+rm -f %{buildroot}*/usr/bin/gtk-update-icon-cache
+rm -f %{buildroot}*/usr/bin/gtk-builder-convert
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -176,6 +207,7 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 %defattr(-,root,root,-)
 /usr/bin/gtk-demo
 /usr/bin/gtk-query-immodules-2.0
+/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -1117,6 +1149,10 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 /usr/share/gtk-doc/html/gtk2/zoom-original.png
 /usr/share/gtk-doc/html/gtk2/zoom-out.png
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-gtk+
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
@@ -1142,6 +1178,7 @@ rm -f %{buildroot}/usr/bin/gtk-builder-convert
 /usr/lib64/libgdk-x11-2.0.so.0.2400.33
 /usr/lib64/libgtk-x11-2.0.so.0
 /usr/lib64/libgtk-x11-2.0.so.0.2400.33
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)

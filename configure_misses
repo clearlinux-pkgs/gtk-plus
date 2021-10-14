@@ -1,6 +1,12 @@
+Configure miss: extra flags for POSIX compliance
+Configure miss: extra flags for POSIX compliance
+Configure miss: g++ option to enable C++11 features
 Configure miss: g++ option to enable C++11 features
 Configure miss: indent
-Configure miss: extra flags for POSIX compliance
-Configure miss: uxtheme.h
+Configure miss: indent
 Configure miss: mediaLib 2.3... checking for mlib_ImageSetStruct in -lmlib
+Configure miss: mediaLib 2.3... checking for mlib_ImageSetStruct in -lmlib
+Configure miss: uxtheme.h
+Configure miss: uxtheme.h
+Configure miss: x86_64-generic-linux-gnu-cups-config
 Configure miss: x86_64-generic-linux-gnu-cups-config
