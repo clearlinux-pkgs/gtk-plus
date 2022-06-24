@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.33
-Release  : 46
+Release  : 47
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Summary  : GTK+ Unix print support
@@ -150,23 +150,23 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634254220
+export SOURCE_DATE_EPOCH=1656039866
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mprefer-vector-width=256 "
 %reconfigure --disable-static --disable-papi \
 --with-xinput=xfree
 make  %{?_smp_mflags}
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=x86-64-v3"
-export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3"
-export FFLAGS="$FFLAGS -m64 -march=x86-64-v3"
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 %reconfigure --disable-static --disable-papi \
@@ -184,7 +184,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1634254220
+export SOURCE_DATE_EPOCH=1656039866
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp %{_builddir}/gtk+-2.24.33/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
@@ -198,7 +198,7 @@ popd
 ## Remove excluded files
 rm -f %{buildroot}*/usr/bin/gtk-update-icon-cache
 rm -f %{buildroot}*/usr/bin/gtk-builder-convert
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -1155,6 +1155,32 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-am-et.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-cedilla.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-cyrillic-translit.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-inuktitut.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-ipa.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-multipress.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-thai.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-ti-er.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-ti-et.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-viqr.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/im-xim.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libferret.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgail.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18.0.1
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so.0
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so.0.2400.33
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0.2400.33
+/usr/lib64/glibc-hwcaps/x86-64-v3/libpixmap.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libprintbackend-cups.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libprintbackend-file.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libprintbackend-lpr.so
 /usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-am-et.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-cedilla.so
@@ -1178,7 +1204,6 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /usr/lib64/libgdk-x11-2.0.so.0.2400.33
 /usr/lib64/libgtk-x11-2.0.so.0
 /usr/lib64/libgtk-x11-2.0.so.0.2400.33
-/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
