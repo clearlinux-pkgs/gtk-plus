@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.33
-Release  : 47
+Release  : 49
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Summary  : GTK+ Unix print support
@@ -18,7 +18,6 @@ Requires: gtk+-license = %{version}-%{release}
 Requires: gtk+-locales = %{version}-%{release}
 BuildRequires : automake
 BuildRequires : automake-dev
-BuildRequires : buildreq-gnome
 BuildRequires : cups-dev
 BuildRequires : docbook-xml
 BuildRequires : e2fsprogs-dev
@@ -150,7 +149,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656039866
+export SOURCE_DATE_EPOCH=1656122116
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -184,7 +183,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1656039866
+export SOURCE_DATE_EPOCH=1656122116
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp %{_builddir}/gtk+-2.24.33/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
@@ -1155,19 +1154,6 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-am-et.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-cedilla.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-cyrillic-translit.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-inuktitut.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-ipa.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-multipress.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-thai.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-ti-er.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-ti-et.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-viqr.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/im-xim.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libferret.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgail.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18.0.1
@@ -1177,10 +1163,6 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0.2400.33
-/usr/lib64/glibc-hwcaps/x86-64-v3/libpixmap.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libprintbackend-cups.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libprintbackend-file.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libprintbackend-lpr.so
 /usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-am-et.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-cedilla.so

@@ -3,3 +3,4 @@
 # undesireable desirable. One name per line, no whitespace.
 #
 cairo-$cairo_backend
+buildreq-gnome
