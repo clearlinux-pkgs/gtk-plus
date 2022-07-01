@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.33
-Release  : 49
+Release  : 50
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Summary  : GTK+ Unix print support
@@ -532,6 +532,9 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintjob.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintunixdialog.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkunixprint.h
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so
 /usr/lib64/gtk-2.0/include/gdkconfig.h
 /usr/lib64/libgailutil.so
 /usr/lib64/libgdk-x11-2.0.so
@@ -1154,13 +1157,10 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18.0.1
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so.0
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so.0.2400.33
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0
 /usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0.2400.33
 /usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
@@ -1186,6 +1186,7 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /usr/lib64/libgdk-x11-2.0.so.0.2400.33
 /usr/lib64/libgtk-x11-2.0.so.0
 /usr/lib64/libgtk-x11-2.0.so.0.2400.33
+/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
