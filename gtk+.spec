@@ -4,7 +4,7 @@
 #
 Name     : gtk+
 Version  : 2.24.33
-Release  : 55
+Release  : 56
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Summary  : GTK+ Unix print support
@@ -149,7 +149,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656122116
+export SOURCE_DATE_EPOCH=1664153121
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -183,11 +183,11 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1656122116
+export SOURCE_DATE_EPOCH=1664153121
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
-cp %{_builddir}/gtk+-2.24.33/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
-cp %{_builddir}/gtk+-2.24.33/gdk/COPYING %{buildroot}/usr/share/package-licenses/gtk+/fdeb196b87202005f0c9ee4044f6a7da68a43801
+cp %{_builddir}/gtk+-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f || :
+cp %{_builddir}/gtk+-%{version}/gdk/COPYING %{buildroot}/usr/share/package-licenses/gtk+/fdeb196b87202005f0c9ee4044f6a7da68a43801 || :
 pushd ../buildavx2/
 %make_install_v3
 popd
