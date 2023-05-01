@@ -5,7 +5,7 @@
 #
 Name     : gtk+
 Version  : 2.24.33
-Release  : 59
+Release  : 60
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Summary  : GTK+ Unix print support
@@ -13,7 +13,6 @@ Group    : Development/Tools
 License  : LGPL-2.0 LGPL-2.1
 Requires: gtk+-bin = %{version}-%{release}
 Requires: gtk+-data = %{version}-%{release}
-Requires: gtk+-filemap = %{version}-%{release}
 Requires: gtk+-lib = %{version}-%{release}
 Requires: gtk+-license = %{version}-%{release}
 Requires: gtk+-locales = %{version}-%{release}
@@ -64,7 +63,6 @@ Summary: bin components for the gtk+ package.
 Group: Binaries
 Requires: gtk+-data = %{version}-%{release}
 Requires: gtk+-license = %{version}-%{release}
-Requires: gtk+-filemap = %{version}-%{release}
 
 %description bin
 bin components for the gtk+ package.
@@ -99,20 +97,11 @@ Group: Documentation
 doc components for the gtk+ package.
 
 
-%package filemap
-Summary: filemap components for the gtk+ package.
-Group: Default
-
-%description filemap
-filemap components for the gtk+ package.
-
-
 %package lib
 Summary: lib components for the gtk+ package.
 Group: Libraries
 Requires: gtk+-data = %{version}-%{release}
 Requires: gtk+-license = %{version}-%{release}
-Requires: gtk+-filemap = %{version}-%{release}
 
 %description lib
 lib components for the gtk+ package.
@@ -147,15 +136,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680036132
+export SOURCE_DATE_EPOCH=1682981812
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 %reconfigure --disable-static --disable-papi \
 --with-xinput=xfree
 make  %{?_smp_mflags}
@@ -181,7 +170,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1680036132
+export SOURCE_DATE_EPOCH=1682981812
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp %{_builddir}/gtk+-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f || :
@@ -202,9 +191,10 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/gtk-demo
+/V3/usr/bin/gtk-query-immodules-2.0
 /usr/bin/gtk-demo
 /usr/bin/gtk-query-immodules-2.0
-/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -272,6 +262,9 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 
 %files dev
 %defattr(-,root,root,-)
+/V3/usr/lib64/libgailutil.so
+/V3/usr/lib64/libgdk-x11-2.0.so
+/V3/usr/lib64/libgtk-x11-2.0.so
 /usr/include/gail-1.0/gail/gailwidget.h
 /usr/include/gail-1.0/libgail-util/gail-util.h
 /usr/include/gail-1.0/libgail-util/gailmisc.h
@@ -530,9 +523,6 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintjob.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkprintunixdialog.h
 /usr/include/gtk-unix-print-2.0/gtk/gtkunixprint.h
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so
 /usr/lib64/gtk-2.0/include/gdkconfig.h
 /usr/lib64/libgailutil.so
 /usr/lib64/libgdk-x11-2.0.so
@@ -1149,18 +1139,31 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /usr/share/gtk-doc/html/gtk2/zoom-original.png
 /usr/share/gtk-doc/html/gtk2/zoom-out.png
 
-%files filemap
-%defattr(-,root,root,-)
-/usr/share/clear/filemap/filemap-gtk+
-
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgailutil.so.18.0.1
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgdk-x11-2.0.so.0.2400.33
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libgtk-x11-2.0.so.0.2400.33
+/V3/usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-am-et.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-cedilla.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-cyrillic-translit.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-inuktitut.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-ipa.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-multipress.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-thai.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-ti-er.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-ti-et.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-viqr.so
+/V3/usr/lib64/gtk-2.0/2.10.0/immodules/im-xim.so
+/V3/usr/lib64/gtk-2.0/2.10.0/printbackends/libprintbackend-cups.so
+/V3/usr/lib64/gtk-2.0/2.10.0/printbackends/libprintbackend-file.so
+/V3/usr/lib64/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so
+/V3/usr/lib64/gtk-2.0/modules/libferret.so
+/V3/usr/lib64/gtk-2.0/modules/libgail.so
+/V3/usr/lib64/libgailutil.so.18
+/V3/usr/lib64/libgailutil.so.18.0.1
+/V3/usr/lib64/libgdk-x11-2.0.so.0
+/V3/usr/lib64/libgdk-x11-2.0.so.0.2400.33
+/V3/usr/lib64/libgtk-x11-2.0.so.0
+/V3/usr/lib64/libgtk-x11-2.0.so.0.2400.33
 /usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-am-et.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-cedilla.so
@@ -1184,7 +1187,6 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /usr/lib64/libgdk-x11-2.0.so.0.2400.33
 /usr/lib64/libgtk-x11-2.0.so.0
 /usr/lib64/libgtk-x11-2.0.so.0.2400.33
-/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
