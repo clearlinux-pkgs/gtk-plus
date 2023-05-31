@@ -5,7 +5,7 @@
 #
 Name     : gtk+
 Version  : 2.24.33
-Release  : 60
+Release  : 61
 URL      : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Source0  : https://download.gnome.org/sources/gtk+/2.24/gtk+-2.24.33.tar.xz
 Summary  : GTK+ Unix print support
@@ -136,7 +136,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1682981812
+export SOURCE_DATE_EPOCH=1685548744
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -170,7 +170,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1682981812
+export SOURCE_DATE_EPOCH=1685548744
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gtk+
 cp %{_builddir}/gtk+-%{version}/COPYING %{buildroot}/usr/share/package-licenses/gtk+/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f || :
@@ -262,9 +262,6 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libgailutil.so
-/V3/usr/lib64/libgdk-x11-2.0.so
-/V3/usr/lib64/libgtk-x11-2.0.so
 /usr/include/gail-1.0/gail/gailwidget.h
 /usr/include/gail-1.0/libgail-util/gail-util.h
 /usr/include/gail-1.0/libgail-util/gailmisc.h
@@ -1158,11 +1155,8 @@ rm -f %{buildroot}*/usr/bin/gtk-builder-convert
 /V3/usr/lib64/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so
 /V3/usr/lib64/gtk-2.0/modules/libferret.so
 /V3/usr/lib64/gtk-2.0/modules/libgail.so
-/V3/usr/lib64/libgailutil.so.18
 /V3/usr/lib64/libgailutil.so.18.0.1
-/V3/usr/lib64/libgdk-x11-2.0.so.0
 /V3/usr/lib64/libgdk-x11-2.0.so.0.2400.33
-/V3/usr/lib64/libgtk-x11-2.0.so.0
 /V3/usr/lib64/libgtk-x11-2.0.so.0.2400.33
 /usr/lib64/gtk-2.0/2.10.0/engines/libpixmap.so
 /usr/lib64/gtk-2.0/2.10.0/immodules/im-am-et.so
